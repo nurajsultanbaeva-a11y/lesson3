@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/add_task/add_view_model.dart';
+import 'package:flutter_application_2/database/app_database.dart';
+import 'package:flutter_application_2/database/app_repository.dart';
 
 class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({super.key});
+  final AppDatabase database;
+
+  const AddTaskPage({super.key, required this.database});
 
   @override
   State<AddTaskPage> createState() => _AddTaskPageState();
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
-  final TextEditingController controller = TextEditingController();
+  late final AddViewModel vm;
+  late final AppDatabase db;
+
+  final TextEditingController _controller = TextEditingController();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    db = widget.database;
+    final repo = AppRepositoryImpl(database: db);
+    vm = AddViewModel(repo: repo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +40,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         child: Column(
           children: [
             TextField(
-              controller: controller,
+              controller: _controller,
               decoration: const InputDecoration(
                 hintText: "Введите название задачи",
                 border: OutlineInputBorder(),
@@ -32,9 +51,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (controller.text.trim().isNotEmpty) {
-                    Navigator.pop(context, controller.text);
-                  }
+                 _saveTodo();
                 },
                 child: const Text("Сохранить"),
               ),
@@ -44,4 +61,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ),
     );
   }
+
+
+
+void _saveTodo() {
+  vm.addTodo(_controller.text);
+  Navigator.pop(context, _controller.text);
 }
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+  }
+  }
+
