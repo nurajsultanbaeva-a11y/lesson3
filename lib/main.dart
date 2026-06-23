@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/home/home_page.dart';
 import 'package:flutter_application_2/game/game_page.dart';
 import 'home/home_page.dart';
+import 'settings/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Todo List',
       theme: ThemeData.light(),
-      home: const HomePage(),
+      home: const SettingsPage(),
     );
   }
 }

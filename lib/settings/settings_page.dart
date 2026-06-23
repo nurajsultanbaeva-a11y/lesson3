@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
-
   const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
 
+class _SettingsPageState extends State<SettingsPage> {
+  bool isDarkTheme = false;
+ 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+  backgroundColor:
+      isDarkTheme ?   Colors.black : Colors.white,
       appBar: AppBar(
         title: const Text("Настройки"),
       ),
@@ -33,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
 
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDarkTheme ? Colors.grey[900] : Colors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: Colors.grey.shade300,
@@ -54,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Text(
                     "Тёмная тема",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: isDarkTheme ? Colors.white : Colors.black,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -65,24 +66,26 @@ class _SettingsPageState extends State<SettingsPage> {
                   Text(
                     "Переключить тему приложения",
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: isDarkTheme
+                            ? Colors.white70
+                            : Colors.black54,
                       fontSize: 11,
                     ),
                   ),
                 ],
               ),
-              Switch(
-                value: false,
-                onChanged: (value) {
-                  setState(() {
-                     
-                  });
-                },
-              )
+                Switch(
+                  value: isDarkTheme,
+                  onChanged: (value) {
+                    setState(() {
+                      isDarkTheme = value;
+                    });
+                  },
+                )
             ],
           ),
         ),
       ),
     );
   }
-}
+ }
